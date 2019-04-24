@@ -4,13 +4,15 @@
 var startTijd, totaalTijd = 0, aantalTijden = 0;
 // StartTijd is de tijd dat het huidige spel begonnen is. 
 // Totaaltijd is de som van de tijd van alle gespeelde spelletjes, aantaltijden is het aantal spelletjes 
-var firstCard, secondCard;
+var firstCard = '', secondCard = '';
 // De eerste en tweede kaart die zijn omgedraaid.
 var karakter;
 // Het teken dat op de achterkant van de kaart getoond wordt
 var intervalID,tijdID;
 // De ID's voor de timeouts voor het terugdraaien van de kaarten en het bijwerken van de tijdweergave
 
+var boardSize;
+// Grootte van het bord 
 var numberOfCards;
 // Aantal kaarten op het bord
 var numberOfCardsLeft;
@@ -32,18 +34,61 @@ function initGame(size) {
 
 function initVars(size){
 	// Initialiseer alle benodigde variabelen en de velden op het scherm 
+	numberOfCards = size * size;
+	numberOfCardsLeft = numberOfCards; 
 	setTijden();
 }
 
 function vulSpeelveld(size){
-	// Bouw de size x size table speelveld op. Elk <td> element van de tabel
-	// moet een karakter toegewezen worden. Hiervoor kan de nextletter functie
-	// gebruikt worden. Ook moet de eventlistener cardClicked aan de cell gekoppeld worden
-	// en de opmaak juist gezet worden.
+	var tbl = document.getElementById("speelveld");
+	var tblBody = document.createElement("tbody");
+	
+	var getNextLetter = new nextLetter(size);
+
+  // cells creation
+  for (var j = 0; j < size; j++) {
+    // table row creation
+		var row = document.createElement("tr");
+		
+    for (var i = 0; i < size; i++) {
+      // create element <td> and text node 
+      //Make text node the contents of <td> element
+      // put <td> at end of the table row
+			var cell = document.createElement("td");
+			cell.className = "inactive";
+			cell.addEventListener(
+				'click',
+				function() { cardClicked(this); },
+				false
+			);
+
+			var text = document.createElement("p");
+      var cellText = document.createTextNode(getNextLetter());
+			
+			text.appendChild(cellText)
+      cell.appendChild(text);
+      row.appendChild(cell);
+    }
+
+    //row added to end of table body
+    tblBody.appendChild(row);
+  }
+
+  // append the <tbody> inside the <table>
+  tbl.appendChild(tblBody);
+
 }
 
 function showScores(){
 	// Vul het topscore lijstje op het scherm.
+	var topScoresList = document.getElementById("topscores");
+	for (var i = 0; i < 5; i++) {
+		var score = topScores[i];
+		var item = document.createElement("li");
+    var value = document.createTextNode(score.name + ": " + score.time);
+		item.appendChild(value);
+		topScoresList.appendChild(item);
+	}
 }
 
 function setTijden(){
@@ -53,8 +98,9 @@ function setTijden(){
 }
 
 function getSeconds(){
-	// Een functie om de Systeemtijd in seconden in plaats van miliseconden 
-	// op te halen. Altijd handig.
+	var date = new Date();
+	var millis = date.getTime();
+	return Math.round(millis / 1000);
 }
 
 var nextLetter = function(size){
@@ -84,21 +130,45 @@ function checkStarttijd(){
 function checkDerdeKaart(){
 	// Controleer of het de derde kaart is die wordt aangeklikt.
 	// Als dit zo is kunnen de geopende kaarten gedeactiveerd (gesloten) worden.
+	if (firstCard != '' && secondCard != '') {
+		deactivateCards();
+	}
 }
 
 function turnCard(card){
 	// Draai de kaart om. Dit kan alleen als de kaart nog niet geopend of gevonden is.
 	// Geef ook aan hoeveel kaarten er nu zijn omgedraaid en return dit zodat in de 
 	// cardClicked functie de checkKaarten functie kan worden aangeroepen als dat nodig is.
+
+	toggleCard(card);
+
+	if (firstCard == '') {
+		firstCard = card;
+		return 1;
+	} else if (secondCard == '') {
+		secondCard = card;
+		return 2
+	}
+
+	return 0;
 }
 
 function deactivateCards() { 
 	// Functie om de twee omgedraaide kaarten weer terug te draaien
+	firstCard.className = "inactive"
+	firstCard = '';
+	secondCard.className = "inactive";
+	secondCard = '';
 }
 
 function toggleCard(element) {
 	// Draai de kaart om, als de letter getoond wordt, toon dan de achterkant en 
 	// vice versa. switch dus van active naar inactive of omgekeerd.
+	if (element.className == "active") {
+		element.className = "inactive"
+	} else if (element.className == "inactive") { 
+		element.className = "active"
+	};
 }
 
 function checkKaarten(){
@@ -108,6 +178,18 @@ function checkKaarten(){
 	// zijn nu found.
 	// Als de kaarten niet gelijk zijn moet de timer gaan lopen van de toontijd, en 
 	// de timeleft geanimeerd worden zodat deze laat zien hoeveel tijd er nog is.
+	var firstCardLetter = firstCard.childNodes[0].innerText;
+	console.log(firstCardLetter);
+	var secondCardLetter = secondCard.childNodes[0].innerText;
+	console.log(secondCardLetter);
+
+	if (firstCardLetter == secondCardLetter) {
+		firstCard.className = "found";
+		secondCard.className = "found";
+		firstCard = '';
+		secondCard = '';
+	} 
+
 }
 
 // De functie tijdBijhouden moet elke halve seconde uitgevoerd worden om te controleren of 
@@ -136,6 +218,7 @@ function setColor(stylesheetId) {
 	var valueLocation = '#value'+stylesheetId.substring(3);
 	var color = $(valueLocation).val();
 	$(stylesheetId).css('background-color', '#'+color );
+	$(stylesheetId).css('color', '#'+color );
   }
 
 // knuth array shuffle

@@ -14,7 +14,7 @@
   header.span { display:table-cell; }
 
   table#speelveld { table-layout:fixed;   margin:0 auto; }
-  table#speelveld td { cursor:pointer; text-align:center; color:white; font-size:large; font-weight:bold; }  
+  table#speelveld td { cursor:pointer; text-align:center; /* color:black; */ font-size:large; font-weight:bold; }  
 
   table#meta { position:fixed; right:4vw; top:10vw;  width: 25vw; height:70vh; }
   table#meta td { vertical-align:top; text-align:left; padding:1%; }
@@ -28,7 +28,8 @@
     table#speelveld { width:70vw; height:70vw; border-spacing:1vw;}
   }
 	td.inactive { background-color:red; }
-    td.active { background-color:green; }
+  td.inactive p { visibility: hidden ;}
+  td.active { background-color:green; }
 	td.found{ background-color:purple; cursor:default; }
   
   button {width: 100px}
@@ -56,6 +57,9 @@
   Gevonden kaart-paren: <span id="gevonden">0</span><br>
   Resterende toontijd: <br>
   <button id="myTime"><div id="timeLeft"></div></button><br/>
+  </div>
+  <div id="board">
+
   </div>
 </header>
 
