@@ -1,23 +1,23 @@
 /**
  * 
  */
-var startTijd, totaalTijd = 0, aantalTijden = 0;
+let startTijd, totaalTijd = 0, aantalTijden = 0;
 // StartTijd is de tijd dat het huidige spel begonnen is. 
 // Totaaltijd is de som van de tijd van alle gespeelde spelletjes, aantaltijden is het aantal spelletjes 
-var firstCard = '', secondCard = '';
+let firstCard = '', secondCard = '';
 // De eerste en tweede kaart die zijn omgedraaid.
-var karakter;
+let karakter;
 // Het teken dat op de achterkant van de kaart getoond wordt
-var intervalID,tijdID;
+let intervalID,tijdID;
 // De ID's voor de timeouts voor het terugdraaien van de kaarten en het bijwerken van de tijdweergave
 
-var boardSize;
+let boardSize;
 // Grootte van het bord 
-var numberOfCards;
+let numberOfCards;
 // Aantal kaarten op het bord
-var numberOfCardsLeft;
+let numberOfCardsLeft;
 // Aantal kaarten dat nog op het bord ligt
-var topScores = [
+let topScores = [
                  {name:"Barack Obama", time:200},
                  {name:"Bernie Sanders", time:300},
                  {name:"Hillary Clinton", time:400},
@@ -40,21 +40,21 @@ function initVars(size){
 }
 
 function vulSpeelveld(size){
-	var tbl = document.getElementById("speelveld");
-	var tblBody = document.createElement("tbody");
+	let tbl = document.getElementById("speelveld");
+	let tblBody = document.createElement("tbody");
 	
-	var getNextLetter = new nextLetter(size);
+	let getNextLetter = new nextLetter(size);
 
   // cells creation
-  for (var j = 0; j < size; j++) {
+  for (let j = 0; j < size; j++) {
     // table row creation
-		var row = document.createElement("tr");
+		let row = document.createElement("tr");
 		
-    for (var i = 0; i < size; i++) {
+    for (let i = 0; i < size; i++) {
       // create element <td> and text node 
       //Make text node the contents of <td> element
       // put <td> at end of the table row
-			var cell = document.createElement("td");
+			let cell = document.createElement("td");
 			cell.className = "inactive";
 			cell.addEventListener(
 				'click',
@@ -62,8 +62,8 @@ function vulSpeelveld(size){
 				false
 			);
 
-			var text = document.createElement("p");
-      var cellText = document.createTextNode(getNextLetter());
+			let text = document.createElement("p");
+      let cellText = document.createTextNode(getNextLetter());
 			
 			text.appendChild(cellText)
       cell.appendChild(text);
@@ -81,11 +81,11 @@ function vulSpeelveld(size){
 
 function showScores(){
 	// Vul het topscore lijstje op het scherm.
-	var topScoresList = document.getElementById("topscores");
-	for (var i = 0; i < 5; i++) {
-		var score = topScores[i];
-		var item = document.createElement("li");
-    var value = document.createTextNode(score.name + ": " + score.time);
+	let topScoresList = document.getElementById("topscores");
+	for (let i = 0; i < 5; i++) {
+		let score = topScores[i];
+		let item = document.createElement("li");
+    let value = document.createTextNode(score.name + ": " + score.time);
 		item.appendChild(value);
 		topScoresList.appendChild(item);
 	}
@@ -98,17 +98,17 @@ function setTijden(){
 }
 
 function getSeconds(){
-	var date = new Date();
-	var millis = date.getTime();
+	let date = new Date();
+	let millis = date.getTime();
 	return Math.round(millis / 1000);
 }
 
-var nextLetter = function(size){
-	var letterArray = "AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPPQQRRSSTTUUVVWWXXYYZZ".substring(0,size*size).split('');
-	var idx=0;
+let nextLetter = function(size){
+	let letterArray = "AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPPQQRRSSTTUUVVWWXXYYZZ".substring(0,size*size).split('');
+	let idx=0;
 	letterArray=shuffle(letterArray);
 	return function() {
-		var letter = letterArray[idx++]; 
+		let letter = letterArray[idx++]; 
 		return letter;
 	}
 } 
@@ -116,7 +116,7 @@ var nextLetter = function(size){
 function cardClicked(card) {
 	checkStarttijd();
 	checkDerdeKaart();
-	var draaiKaartOm = turnCard(card);
+	let draaiKaartOm = turnCard(card);
 	if (draaiKaartOm==2){
 		checkKaarten();
 	}
@@ -142,7 +142,7 @@ function turnCard(card){
 
 	toggleCard(card);
 
-	if (firstCard == '') {
+	if (firstCard == '' || firstCard == card) {
 		firstCard = card;
 		return 1;
 	} else if (secondCard == '') {
@@ -178,10 +178,8 @@ function checkKaarten(){
 	// zijn nu found.
 	// Als de kaarten niet gelijk zijn moet de timer gaan lopen van de toontijd, en 
 	// de timeleft geanimeerd worden zodat deze laat zien hoeveel tijd er nog is.
-	var firstCardLetter = firstCard.childNodes[0].innerText;
-	console.log(firstCardLetter);
-	var secondCardLetter = secondCard.childNodes[0].innerText;
-	console.log(secondCardLetter);
+	let firstCardLetter = firstCard.childNodes[0].innerText;
+	let secondCardLetter = secondCard.childNodes[0].innerText;
 
 	if (firstCardLetter == secondCardLetter) {
 		firstCard.className = "found";
@@ -215,16 +213,15 @@ function updateTopScores(speelTijd){
 
 // Deze functie ververst de kleuren van de kaarten van het type dat wordt meegegeven.
 function setColor(stylesheetId) {
-	var valueLocation = '#value'+stylesheetId.substring(3);
-	var color = $(valueLocation).val();
+	let valueLocation = '#value'+stylesheetId.substring(3);
+	let color = $(valueLocation).val();
 	$(stylesheetId).css('background-color', '#'+color );
-	$(stylesheetId).css('color', '#'+color );
-  }
+}
 
 // knuth array shuffle
 // from https://bost.ocks.org/mike/shuffle/ 
 function shuffle(array) {
-	var currentIndex = array.length, temporaryValue, randomIndex;
+	let currentIndex = array.length, temporaryValue, randomIndex;
 	// While there remain elements to shuffle...
 	while (0 !== currentIndex) {
 		// Pick a remaining element...
