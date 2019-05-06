@@ -8,10 +8,10 @@ let firstCard = '', secondCard = '';
 // De eerste en tweede kaart die zijn omgedraaid.
 let karakter;
 // Het teken dat op de achterkant van de kaart getoond wordt
-let intervalID,tijdID;
+let intervalID = 2000; //, tijdID;
 // De ID's voor de timeouts voor het terugdraaien van de kaarten en het bijwerken van de tijdweergave
 
-let boardSize;
+// let boardSize;
 // Grootte van het bord 
 let numberOfCards;
 // Aantal kaarten op het bord
@@ -34,14 +34,18 @@ function initGame(size) {
 
 function initVars(size){
 	// Initialiseer alle benodigde variabelen en de velden op het scherm 
+	startTijd = undefined;
 	numberOfCards = size * size;
 	numberOfCardsLeft = numberOfCards; 
+	karakter = $("#character").val();
+	
 	setTijden();
 }
 
 function vulSpeelveld(size){
 	let tbl = document.getElementById("speelveld");
-	let tblBody = document.createElement("tbody");
+	$(tbl).empty();
+	tblBody = document.createElement("tbody");
 	
 	let getNextLetter = new nextLetter(size);
 
@@ -62,11 +66,19 @@ function vulSpeelveld(size){
 				false
 			);
 
-			let text = document.createElement("p");
-      let cellText = document.createTextNode(getNextLetter());
+			let p = document.createElement("p");
+			let text = document.createTextNode(getNextLetter());
 			
-			text.appendChild(cellText)
-      cell.appendChild(text);
+			p.appendChild(text);
+			p.className = "letterParagraph"
+			cell.appendChild(p);
+			
+			p = document.createElement("p");
+			text = document.createTextNode(karakter);
+			
+			p.appendChild(text);
+			p.className = "karakterParagraph"
+			cell.appendChild(p);
       row.appendChild(cell);
     }
 
@@ -82,6 +94,8 @@ function vulSpeelveld(size){
 function showScores(){
 	// Vul het topscore lijstje op het scherm.
 	let topScoresList = document.getElementById("topscores");
+	$(topScoresList).empty();
+	topScores.sort((a, b) => a.time - b.time)
 	for (let i = 0; i < 5; i++) {
 		let score = topScores[i];
 		let item = document.createElement("li");
@@ -95,6 +109,20 @@ function setTijden(){
 	// bereken de verlopen tijd, de gemiddlede tijd en het verschil tussen 
 	// de huidige speeltijd en de gemiddelde tijd en vul de elementen in de HTML.
 	// Vul ook het aantal gevonden kaarten
+	
+	let verlopenTijd = (typeof startTijd === "undefined") ? 0 : getSeconds() - startTijd;
+	let verlopenTijdSpan = document.getElementById("tijd");
+	verlopenTijdSpan.innerHTML = verlopenTijd;
+
+	let gevondenParen = (numberOfCards - numberOfCardsLeft) / 2;
+	let gevondenParenSpan = document.getElementById("gevonden");
+	gevondenParenSpan.innerHTML = gevondenParen;
+
+	let gemiddeldeTijd = (aantalTijden === 0) ? 0 : Math.round(totaalTijd / aantalTijden);
+	let verschilGemiddeldeTijd = (typeof startTijd === "undefined") ? 0 : (getSeconds() - startTijd) - gemiddeldeTijd;
+	let gemiddeldSpan = document.getElementById("gemiddeld");
+	let sign = (verschilGemiddeldeTijd >= 0) ? "+" : "";
+	gemiddeldSpan.innerHTML = gemiddeldeTijd + "s (" + sign + verschilGemiddeldeTijd + "s)";
 }
 
 function getSeconds(){
@@ -125,6 +153,10 @@ function cardClicked(card) {
 function checkStarttijd(){
 	// Controleer of de startijd van het spel gezet is, i.e. het spel al gestart was.
 	// Als dat niet zo is doe dat nu, en start de timeOut voor het bijhouden van de tijd.
+	if (typeof startTijd === 'undefined') {
+		startTijd = getSeconds();
+		tijdBijhouden();
+	}
 }
 
 function checkDerdeKaart(){
@@ -140,14 +172,16 @@ function turnCard(card){
 	// Geef ook aan hoeveel kaarten er nu zijn omgedraaid en return dit zodat in de 
 	// cardClicked functie de checkKaarten functie kan worden aangeroepen als dat nodig is.
 
-	toggleCard(card);
-
-	if (firstCard == '' || firstCard == card) {
+	if (firstCard == card) {
+		return 1;
+	} else if (firstCard == '' ) {
 		firstCard = card;
+		toggleCard(card);
 		return 1;
 	} else if (secondCard == '') {
 		secondCard = card;
-		return 2
+		toggleCard(card);
+		return 2;
 	}
 
 	return 0;
@@ -159,6 +193,7 @@ function deactivateCards() {
 	firstCard = '';
 	secondCard.className = "inactive";
 	secondCard = '';
+	$("#timeLeft").animate({width: "185px"}, 0);
 }
 
 function toggleCard(element) {
@@ -186,7 +221,11 @@ function checkKaarten(){
 		secondCard.className = "found";
 		firstCard = '';
 		secondCard = '';
-	} 
+		numberOfCardsLeft -= 2;
+	} else {
+		setTimeout(deactivateCards, intervalID);
+		$("#timeLeft").animate({width: "0px"}, intervalID);
+	}
 
 }
 
@@ -198,17 +237,24 @@ function tijdBijhouden(){
 	}
 	else{
 		setTijden();
-	// Roep hier deze functie over 500 miliseconden opnieuw aan		
+		setTimeout(tijdBijhouden, 500);	
 	}
 }
 
 function endGame(){
 	// Bepaal de speeltijd, chekc topscores en doe de overige
 	// administratie.
+	let speelTijd = getSeconds() - startTijd;
+	let naam = prompt("Please enter your name", "");
+	updateTopScores(naam, speelTijd);
+	showScores();
+	totaalTijd += speelTijd;
+	aantalTijden++;
 }
 
-function updateTopScores(speelTijd){
+function updateTopScores(naam, speelTijd){
 	// Voeg de aangeleverde speeltijd toe aal de lijst met topscores
+	topScores.push({name: naam, time: speelTijd});
 }
 
 // Deze functie ververst de kleuren van de kaarten van het type dat wordt meegegeven.
@@ -216,6 +262,11 @@ function setColor(stylesheetId) {
 	let valueLocation = '#value'+stylesheetId.substring(3);
 	let color = $(valueLocation).val();
 	$(stylesheetId).css('background-color', '#'+color );
+}
+
+function setCharacterOnCards(c){
+	paragraphs = [...document.getElementsByClassName("karakterParagraph")];
+	paragraphs.forEach(p => p.innerHTML = c);
 }
 
 // knuth array shuffle
@@ -238,7 +289,10 @@ function shuffle(array) {
 $(document).ready(function(){
     $("#opnieuw").click(function(){
         initGame($("#size").val());
-    });
+		});
+		$("#character").change(function(){
+				setCharacterOnCards($("#character").val());
+		});
 });
 
 
