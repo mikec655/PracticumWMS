@@ -6,9 +6,20 @@ import { ColorSettingsComponent } from './color-settings/color-settings.componen
 import { NewGameComponent } from './new-game/new-game.component';
 
 @NgModule({
-  declarations: [TopFiveComponent, GameSettingsComponent, ColorSettingsComponent, NewGameComponent],
+  declarations: [
+    TopFiveComponent, 
+    GameSettingsComponent, 
+    ColorSettingsComponent, 
+    NewGameComponent
+  ],
   imports: [
     CommonModule
+  ],
+  exports: [
+    TopFiveComponent,
+    GameSettingsComponent,
+    ColorSettingsComponent,
+    NewGameComponent
   ]
 })
 export class SideBarModule { }

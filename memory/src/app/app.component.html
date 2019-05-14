@@ -67,58 +67,18 @@
 
 <div id="main">
 <div>
-  <table id="speelveld"></table>
+  <table id="speelveld"><tr *ngFor="let card of board">{{ card }}</tr></table>
 
 <table id="meta">
   <tr><td>
-    <b>Top vijf</b>
-    <ol id="topscores"></ol>
-    <b>Gemiddelde speeltijd:</b> <span id="gemiddeld">0s (+0s)</span><br/><br/>
-    <b>Karakter op kaarten:</b> 
-      <select name="character" id="character">
-        <option value="*">*</option>
-        <option value="#">#</option>
-        <option value="@">@</option>
-        <option value="&">&</option>
-        <option value="%">%</option>
-        <option value="X">X</option>
-      </select>
-    <br>
-    <b>Afmeting bord:</b><select name="size" id ="size">
-        <option value=2>2</option>
-        <option value=4>4</option>
-        <option value=6 selected>6</option>
-    </select>
-    </td></tr>
-    <tr><td>
-	    <button class="jscolor
-	    	{valueElement:'valueinactive', 
-	    	 styleElement:'styleInactive', 
-	    	 onFineChange:'setColor(\'td.inactive\')'}">
-	    Kaartkleur
-		</button>
-		<input type="hidden" id="valueinactive" value="ff0000"><input id="styleInactive">
-  	<br>
-	    <button class="jscolor
-	    	{valueElement:'valueactive', 
-	    	 styleElement:'styleActive', 
-	    	 onFineChange:'setColor(\'td.active\')'}">
-	    Open 
-		</button>
-		<input type="hidden" id="valueactive" value="008C00"><input id="styleActive">
-  	<br>
-	    <button class="jscolor
-	    	{valueElement:'valuefound', 
-	    	 styleElement:'styleFound', 
-	    	 onFineChange:'setColor(\'td.found\')'}">
-	    Gevonden 
-		</button>
-		<input type="hidden" id="valuefound" value="800080"><input id="styleFound">
+    <app-top-five></app-top-five>
+    <app-game-settings></app-game-settings>
+  </td></tr>
+  <tr><td>
+    <app-color-settings></app-color-settings>
 	</td></tr>
   <tr><td>
-  <script>
-  </script>
-  <button id="opnieuw">Nieuw Spel</button>
+    <app-new-game></app-new-game>
   </td></tr>
 </table>
  

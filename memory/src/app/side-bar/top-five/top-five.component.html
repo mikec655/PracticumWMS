@@ -1,3 +1,4 @@
-<p>
-  top-five works!
-</p>
+<b>Top vijf</b>
+<ol id="topscores">
+  <li *ngFor="let score of topScores">{{ score.name }}: {{ score.time }}</li>
+</ol>
