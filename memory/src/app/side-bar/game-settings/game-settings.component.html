@@ -1,7 +1,7 @@
 <b>Gemiddelde speeltijd:</b> 
 <span id="gemiddeld">0s (+0s)</span><br/><br/>
 <b>Karakter op kaarten:</b> 
-<select name="character" id="character">
+<select name="character" id="character" (change)="onChange($event)">
   <option value="*">*</option>
   <option value="#">#</option>
   <option value="@">@</option>

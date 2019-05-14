@@ -1,0 +1,18 @@
+td { 
+    background-color:red;
+    /* color:black; */ 
+    cursor:pointer; 
+    font-size:large; 
+    font-weight:bold; 
+    height: 75px; 
+    text-align: center;
+    vertical-align: middle;
+    width: 75px; 
+}
+
+/* td.inactive { background-color:red; }
+td.inactive .letterParagraph { visibility: hidden; display: none;}
+td.active { background-color:green; }
+td.active .karakterParagraph { visibility: hidden; display: none;}
+td.found{ background-color:purple; cursor:default; }
+td.found .karakterParagraph { visibility: hidden; display: none;} */

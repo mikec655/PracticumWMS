@@ -2,12 +2,12 @@
 <html lang="nl">
 <head>
 <meta charset="utf-8"/>
-<title>Javascript memory</title>
+<title>{{ title }}</title>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 </head>
 
-<body onload="initGame(6);">
+<body>
 <header>
   <div>
     <app-top-bar></app-top-bar>
@@ -16,23 +16,26 @@
 </header>
 
 <div id="main">
-<div>
-  <table id="speelveld"><tr *ngFor="let card of board">{{ card }}</tr></table>
+  <div>
+    <table id="speelveld">
+      <tr *ngFor="let row of board">
+        <app-card *ngFor="let card of row" [text]="card"></app-card>
+      </tr>
+    </table>
 
-<table id="meta">
-  <tr><td>
-    <app-top-five></app-top-five>
-    <app-game-settings></app-game-settings>
-  </td></tr>
-  <tr><td>
-    <app-color-settings></app-color-settings>
-	</td></tr>
-  <tr><td>
-    <app-new-game></app-new-game>
-  </td></tr>
-</table>
- 
-</div>
+    <table id="meta">
+      <tr><td>
+        <app-top-five></app-top-five>
+        <app-game-settings (charChange)="updateChar($event)"></app-game-settings>
+      </td></tr>
+      <tr><td>
+        <app-color-settings></app-color-settings>
+      </td></tr>
+      <tr><td>
+        <app-new-game></app-new-game>
+      </td></tr>
+    </table>
+  </div>
 </div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { BoardModule } from './board/board.module';
 
 @Component({
@@ -7,14 +7,22 @@ import { BoardModule } from './board/board.module';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title:string = 'memory';
   size:number = 6;
-
-  board:Array<string> = new Array<string>();
+  char:string = "*";
+  board:string[][];
   
   constructor() {
+    this.updateChar(this.char);
+  }
+
+  updateChar(char:string) {
+    this.char = char;
+    this.board = [];
     for (let i = 0; i < this.size; i++) {
-      this.board[i] = "A";
+      this.board[i] = [];
+      for (let j = 0; j < this.size; j++) {
+        this.board[i][j] = char;
+      }
     }
   }
 }
