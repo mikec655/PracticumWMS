@@ -1,0 +1,26 @@
+body { width:90vw; height:90vh; padding:0; margin:0; font-family:Skia,Verdana,sans-serif; text-align:center; }  
+
+header.span { display:table-cell; }
+
+table#speelveld { table-layout:fixed;   margin:0 auto; }
+table#speelveld td { cursor:pointer; text-align:center; /* color:black; */ font-size:large; font-weight:bold; }  
+
+table#meta { position:fixed; right:4vw; top:10vw;  width: 25vw; height:70vh; }
+table#meta td { vertical-align:top; text-align:left; padding:1%; }
+
+@media only screen and (orientation:landscape) {
+table#speelveld { width:80vh; height:80vh; border-spacing:1vh;}
+}
+
+@media only screen and (orientation:portrait) {
+table#speelveld { width:70vw; height:70vw; border-spacing:1vw;}
+}
+
+td.inactive { background-color:red; }
+td.inactive .letterParagraph { visibility: hidden; display: none;}
+td.active { background-color:green; }
+td.active .karakterParagraph { visibility: hidden; display: none;}
+td.found{ background-color:purple; cursor:default; }
+td.found .karakterParagraph { visibility: hidden; display: none;}
+
+button {width: 100px}

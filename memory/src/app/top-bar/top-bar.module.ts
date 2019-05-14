@@ -7,6 +7,10 @@ import { TopBarComponent } from './top-bar/top-bar.component';
   declarations: [TimeBarComponent, TopBarComponent],
   imports: [
     CommonModule
+  ],
+  exports: [
+    TopBarComponent,
+    TimeBarComponent,
   ]
 })
 export class TopBarModule { }
