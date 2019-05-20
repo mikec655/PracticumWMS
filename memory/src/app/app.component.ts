@@ -12,17 +12,40 @@ export class AppComponent {
   board:string[][];
   
   constructor() {
-    this.updateChar(this.char);
+    this.board = this.getNewBoard();
   }
 
   updateChar(char:string) {
+    console.log("CHAR");
     this.char = char;
-    this.board = [];
+  }
+
+  getNewBoard() : string[][] {
+    let letterArray = "AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPPQQRRSSTTUUVVWWXXYYZZ".substring(0, this.size*this.size).split('');
+    letterArray = this.shuffle(letterArray);
+
+    let newBoard = [];
     for (let i = 0; i < this.size; i++) {
-      this.board[i] = [];
+      newBoard[i] = [];
       for (let j = 0; j < this.size; j++) {
-        this.board[i][j] = char;
+        newBoard[i][j] = letterArray[i + j * this.size];
       }
     }
+    return newBoard
+  } 
+
+  shuffle(array: Array<string>) : Array<string>{
+    let currentIndex = array.length, temporaryValue, randomIndex;
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+    return array;
   }
 }

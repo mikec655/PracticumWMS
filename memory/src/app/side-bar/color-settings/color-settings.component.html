@@ -4,7 +4,7 @@
       <label>Kaartkleur: </label>
     </td>
     <td>
-      <input type="color" value="#ff0000" />
+      <input type="color" (change)="onColorChange($event)" value="#ff0000" />
     </td>
   </tr>
   <tr>
@@ -12,7 +12,7 @@
       <label>Open: </label>
     </td>
     <td>
-      <input type="color" value="#00ff00" />
+      <input type="color" (change)="onOpenColorChange($event)" value="#00ff00" />
     </td>
   </tr>
   <tr>
@@ -20,7 +20,7 @@
       <label>Gevonden: </label>
     </td>
     <td>
-      <input type="color" value="#ff00ff" />
+      <input type="color" (change)="onFoundColorChange($event)" value="#ff00ff" />
     </td>
   </tr>
 </table>

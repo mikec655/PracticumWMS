@@ -1,3 +1,14 @@
-<td>
+<!-- <td (click)="onClick($event)">
   {{ text }}
+</td> -->
+
+
+<td (click)="onClick($event)" *ngIf="isOpen; else isNotOpen">
+  {{ letter }}
 </td>
+  
+<ng-template #isNotOpen>
+  <td (click)="onClick($event)" (onColorChanged)="setColor($event)" [style.background-color]="color">
+    {{ char }}
+  </td>
+</ng-template>

@@ -18,8 +18,8 @@
 <div id="main">
   <div>
     <table id="speelveld">
-      <tr *ngFor="let row of board">
-        <app-card *ngFor="let card of row" [text]="card"></app-card>
+      <tr *ngFor="let cards of board">
+        <app-card *ngFor="let letter of cards" [char]="char" [letter]="letter"></app-card>
       </tr>
     </table>
 
