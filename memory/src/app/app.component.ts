@@ -9,19 +9,17 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  char:string = "*"
+  character:string;
   board:CardData[][]
   boardSubscription:Subscription
+  characterSubscription:Subscription;
   
   constructor(private boardService:BoardService) {
     this.board = boardService.getBoard();
-    this.boardSubscription = boardService.boardChange.subscribe(board => this.board = board)
+    this.boardSubscription = boardService.boardChange.subscribe(board => this.board = board);
+
+    this.character = boardService.getCharacter();
+    this.characterSubscription = boardService.characterChange.subscribe(c => this.character = c);
   }
 
-  updateChar(char:string) {
-    console.log("CHAR");
-    this.char = char;
-  }
-
-  
 }

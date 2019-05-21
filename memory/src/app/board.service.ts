@@ -7,8 +7,9 @@ import { TimeService } from './time.service';
 })
 export class BoardService {
   private size:number = 6
+  private character = "*";
   private board:CardData[][]
-  // boardChange:Subject<string[][]> = new Subject<string[][]>(); 
+
   private foundPairs:number
   private firstCard:CardData
   private secondCard:CardData
@@ -20,6 +21,7 @@ export class BoardService {
 
   boardChange:Subject<CardData[][]> = new Subject<CardData[][]>()
   foundPairsChange:Subject<number> = new Subject<number>()
+  characterChange:Subject<string> = new Subject<string>()
 
   constructor(private timeService:TimeService) {
     this.reset();
@@ -49,11 +51,15 @@ export class BoardService {
 
   setSize(size:number) {
     this.size = size;
-    console.log(size);
   } 
 
+  getCharacter() {
+    return this.character;
+  }
+
   setCharacter(character:string) {
-    //implement
+    this.character = character;
+    this.characterChange.next(this.character);
   }
 
   isGameEnded() : boolean {
