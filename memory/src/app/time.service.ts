@@ -16,12 +16,13 @@ export class TimeService {
 
   verlopenTijdChange:Subject<number> = new Subject<number>();
   verschilGemiddeldeTijdChange:Subject<string> = new Subject<string>()
+  timeBarToggle:Subject<number> = new Subject<number>();
 
   constructor() {
     this.totaalTijd = 0;
     this.aantalTijden = 0;
     this.reset()
-   }
+  }
 
   reset() {
     this.startTijd = -1;
@@ -30,7 +31,7 @@ export class TimeService {
     this.isTimeStopped = false;
   }
 
-  getSeconds(){
+  getSeconds() {
     let date = new Date();
     let millis = date.getTime();
     return Math.round(millis / 1000);
@@ -38,6 +39,10 @@ export class TimeService {
 
   stopTime() {
     this.isTimeStopped = true;
+  }
+
+  startTurnTime() {
+    this.timeBarToggle.next(2000);
   }
 
   setTijden(){

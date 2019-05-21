@@ -6,7 +6,7 @@ import { TimeService } from './time.service';
   providedIn: 'root'
 })
 export class BoardService {
-  private size:number = 2
+  private size:number = 6
   private board:CardData[][]
   // boardChange:Subject<string[][]> = new Subject<string[][]>(); 
   private foundPairs:number
@@ -65,6 +65,7 @@ export class BoardService {
     this.checkDerdeKaart();
     let draaiKaartOm = this.turnCard(card);
     if (draaiKaartOm == 2){
+      this.timeService.startTurnTime();
       this.checkKaarten();
     }
 

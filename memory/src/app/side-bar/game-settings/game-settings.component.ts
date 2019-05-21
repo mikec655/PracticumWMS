@@ -1,5 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { BoardService } from 'src/app/board.service';
+import { TimeService } from 'src/app/time.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-game-settings',
@@ -10,7 +12,17 @@ export class GameSettingsComponent implements OnInit {
 
   @Output() charChange: EventEmitter<any> = new EventEmitter();
 
-  constructor(private boardService:BoardService) { }
+  verschilGemiddeldeTijd:string = "0s (+0s)"
+  verschilGemiddeldeTijdSubscription:Subscription
+
+  constructor(
+    private boardService:BoardService,
+    private timeService:TimeService) { 
+
+      this.verschilGemiddeldeTijdSubscription = timeService.verschilGemiddeldeTijdChange.subscribe(
+        text => this.verschilGemiddeldeTijd = text
+      ) 
+    }
 
   ngOnInit() { }
 
