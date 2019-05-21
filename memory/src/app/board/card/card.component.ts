@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ColorService } from 'src/app/color.service';import { Subscription } from 'rxjs';
+import { ColorService } from 'src/app/color.service';
+import { Subscription } from 'rxjs';
 ;
 
 @Component({
@@ -25,6 +26,7 @@ export class CardComponent implements OnInit {
   @Output() cardClicked: EventEmitter<string> = new EventEmitter();
 
   constructor(private colorService:ColorService) { 
+    
     this.inactiveColorSubscription = colorService.inactiveColorChange.subscribe((color) => { 
       this.inactiveColor = color; 
     });
