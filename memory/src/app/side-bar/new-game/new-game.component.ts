@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { TimeService } from 'src/app/time.service';
+import { BoardService } from 'src/app/board.service';
 
 @Component({
   selector: 'app-new-game',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NewGameComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private boardService:BoardService,
+    private timeService:TimeService) { }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  onClick() {
+    console.log("CLICK");
+    this.boardService.reset();
+    this.timeService.reset();
   }
 
 }

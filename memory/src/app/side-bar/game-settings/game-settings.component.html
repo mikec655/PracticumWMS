@@ -11,7 +11,7 @@
 </select>
 <br>
 <b>Afmeting bord:</b>
-<select name="size" id ="size">
+<select name="size" id ="size" (change)="onSizeChange($event)">
   <option value=2>2</option>
   <option value=4>4</option>
   <option value=6 selected>6</option>

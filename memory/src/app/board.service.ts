@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Subject} from 'rxjs';
+import { TimeService } from './time.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BoardService {
-  private size:number = 6
+  private size:number = 2
   private board:CardData[][]
   // boardChange:Subject<string[][]> = new Subject<string[][]>(); 
-  private foundPairs:number = 0;
+  private foundPairs:number
   private firstCard:CardData
   private secondCard:CardData
   private emptyCard:CardData = {
@@ -20,12 +21,15 @@ export class BoardService {
   boardChange:Subject<CardData[][]> = new Subject<CardData[][]>()
   foundPairsChange:Subject<number> = new Subject<number>()
 
-  constructor() {
-    this.init();
+  constructor(private timeService:TimeService) {
+    this.reset();
   }
 
-  init() {
+  reset() {
     this.board = this.createNewBoard();
+    this.boardChange.next(this.board);
+    this.foundPairs = 0;
+    this.foundPairsChange.next(this.foundPairs)
     this.emptyCard = {
       index: -1,
       character: "",
@@ -45,18 +49,31 @@ export class BoardService {
 
   setSize(size:number) {
     this.size = size;
+    console.log(size);
   } 
 
+  setCharacter(character:string) {
+    //implement
+  }
+
+  isGameEnded() : boolean {
+    return this.foundPairs == this.size * this.size / 2;
+  }
+
   cardClicked(card:CardData) {
-    // checkStarttijd();
+    this.timeService.checkStarttijd();
     this.checkDerdeKaart();
     let draaiKaartOm = this.turnCard(card);
-    if (draaiKaartOm==2){
+    if (draaiKaartOm == 2){
       this.checkKaarten();
     }
 
     this.boardChange.next(this.board);
     this.foundPairsChange.next(this.foundPairs);
+
+    if (this.isGameEnded()) {
+      this.timeService.stopTime();
+    }
 
     console.log(this.board);
   }
@@ -153,7 +170,7 @@ export class BoardService {
   } 
 
   shuffle(array: Array<string>) : Array<string>{
-    let currentIndex = array.length, temporaryValue, randomIndex;
+    let currentIndex:number = array.length, temporaryValue:string, randomIndex:number;
     // While there remain elements to shuffle...
     while (0 !== currentIndex) {
       // Pick a remaining element...

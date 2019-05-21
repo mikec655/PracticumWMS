@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { BoardService } from 'src/app/board.service';
 
 @Component({
   selector: 'app-game-settings',
@@ -9,14 +10,16 @@ export class GameSettingsComponent implements OnInit {
 
   @Output() charChange: EventEmitter<any> = new EventEmitter();
 
-  constructor() { }
+  constructor(private boardService:BoardService) { }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  onSizeChange(e:any) {
+    this.boardService.setSize(e.target.value);
   }
 
-  onChange(e: any) {
-    console.log(e.target.value);
-    this.charChange.emit(e.target.value);
+  onCharacterChange(e:any) {
+    this.boardService.setCharacter(e.target.value);
   }
 
 }
