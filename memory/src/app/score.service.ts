@@ -1,6 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import {topScore} from './side-bar/top-five/top-five.component';
+import { topScore } from './side-bar/top-five/top-five.component';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +26,7 @@ export class ScoreService {
 
   topScorechanged(naam:string, score:number){
     console.log("scoreservice scorechanged aangroepen: " + naam + " "+ score);
-    var newscore : topScore ={name:naam, time:score}
+    var newscore : topScore = {name:naam, time:score}
     this.changeTopScore.next(newscore);
   }
 }

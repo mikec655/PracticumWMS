@@ -120,7 +120,6 @@ export class BoardService {
     this.firstCard = this.emptyCard;
     this.secondCard.state = "inactive";
     this.secondCard = this.emptyCard;
-    //$("#timeLeft").animate({width: "185px"}, 0);
   }
   
   toggleCard(card:CardData) {
