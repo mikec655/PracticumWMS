@@ -12,19 +12,12 @@ import { TimeService } from 'src/app/time.service';
   selector: 'app-time-bar',
   animations: [
     trigger('startStop', [
-      state('start', style({
-        width: '0px'
-      })),
-      state('stop', style({
-        width: '185px'
-      })),
-      // transition('open => closed', [
-      //   animate('1s')
-      // ]),
-      transition('stop => start', [
-        animate('2s')
-      ]),
-    ]),
+      state('left', style({ 'width': '185px' })),
+      state('right', style({ 'width': '0px' })),
+      transition('left => right', [
+        animate(2000)
+      ])
+    ])
   ],
   templateUrl: './time-bar.component.html',
   styleUrls: ['./time-bar.component.css']
@@ -32,7 +25,8 @@ import { TimeService } from 'src/app/time.service';
 
 
 export class TimeBarComponent implements OnInit {
-  isStarted:boolean = false;
+  state:string = "left";
+  lastTimeout:any
 
   constructor(private timeService:TimeService) { 
     this.timeService.timeBarToggle.subscribe(time => this.toggle(time))
@@ -41,11 +35,20 @@ export class TimeBarComponent implements OnInit {
   ngOnInit() { }
 
   toggle = (time:number) => {
-    console.log("TOGGLE");
-    this.isStarted = this.isStarted ? false : true
-    if (this.isStarted) {
-      setTimeout(this.toggle, time);
-    }
+  
+    clearTimeout(this.lastTimeout);
+    this.stopAnimation();
+    setTimeout(() => this.startAnimation(), 1);
+    this.lastTimeout = setTimeout(() => this.stopAnimation(), time)
+    
+  }
+
+  startAnimation() {
+    this.state = "right";
+  }
+
+  stopAnimation() {
+    this.state = "left"
   }
 
 }

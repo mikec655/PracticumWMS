@@ -19,6 +19,8 @@ export class BoardService {
     state: ""
   }
 
+  private lastTimeout
+
   boardChange:Subject<CardData[][]> = new Subject<CardData[][]>()
   foundPairsChange:Subject<number> = new Subject<number>()
   characterChange:Subject<string> = new Subject<string>()
@@ -71,7 +73,6 @@ export class BoardService {
     this.checkDerdeKaart();
     let draaiKaartOm = this.turnCard(card);
     if (draaiKaartOm == 2){
-      this.timeService.startTurnTime();
       this.checkKaarten();
     }
 
@@ -151,8 +152,9 @@ export class BoardService {
       this.secondCard = this.emptyCard;
       this.foundPairs += 1;
     } else {
-      setTimeout(this.deactivateCards, 2000);
-      //$("#timeLeft").animate({width: "0px"}, intervalID);
+      clearTimeout(this.lastTimeout);
+      this.lastTimeout = setTimeout(this.deactivateCards, 2000);
+      this.timeService.startTurnTime();
     }
   
   }
