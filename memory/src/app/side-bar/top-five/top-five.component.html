@@ -1,4 +1,7 @@
 <b>Top vijf</b>
 <ol id="topscores">
   <li *ngFor="let score of topScores">{{ score.name }}: {{ score.time }}</li>
+  
+    <input type="input" (change)="onScoreChange($event)" value="" />
+  
 </ol>
