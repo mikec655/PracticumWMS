@@ -90,8 +90,12 @@ export class BoardService {
     // Draai de kaart om. Dit kan alleen als de kaart nog niet geopend of gevonden is.
     // Geef ook aan hoeveel kaarten er nu zijn omgedraaid en return dit zodat in de 
     // cardClicked functie de checkKaarten functie kan worden aangeroepen als dat nodig is.
-  
-    if (this.firstCard.index == card.index) {
+
+    if (card.state == "found" && this.firstCard.index == -1) {
+      return 0;
+    } else if (card.state == "found" && this.secondCard.index == -1) {
+      return 1;
+    } else if (this.firstCard.index == card.index) {
       return 1;
     } else if (this.firstCard.index == -1) {
       this.firstCard = card;
@@ -101,9 +105,10 @@ export class BoardService {
       this.secondCard = card;
       this.toggleCard(card);
       return 2;
+    } else {
+      return 0;
     }
     
-    return 0;
   }
 
   checkDerdeKaart(){
@@ -125,8 +130,6 @@ export class BoardService {
   toggleCard(card:CardData) {
     // Draai de kaart om, als de letter getoond wordt, toon dan de achterkant en 
     // vice versa. switch dus van active naar inactive of omgekeerd.
-    let x = card.index / this.size;
-    let y = card.index % this.size;
     if (card.state == "active") {
       card.state = "inactive"
     } else if (card.state == "inactive") { 
