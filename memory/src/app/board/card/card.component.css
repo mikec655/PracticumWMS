@@ -1,6 +1,4 @@
-td { 
-    background-color:red;
-    /* color:black; */ 
+td {  
     cursor:pointer; 
     font-size:large; 
     font-weight:bold; 
@@ -9,10 +7,3 @@ td {
     vertical-align: middle;
     width: 75px; 
 }
-
-/* td.inactive { background-color:red; }
-td.inactive .letterParagraph { visibility: hidden; display: none;}
-td.active { background-color:green; }
-td.active .karakterParagraph { visibility: hidden; display: none;}
-td.found{ background-color:purple; cursor:default; }
-td.found .karakterParagraph { visibility: hidden; display: none;} */

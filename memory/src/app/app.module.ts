@@ -5,6 +5,8 @@ import { SideBarModule } from './side-bar/side-bar.module';
 import { TopBarModule } from './top-bar/top-bar.module';
 
 import { AppComponent } from './app.component';
+import { BoardService } from './board.service';
+import { ColorService } from './color.service';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,7 @@ import { AppComponent } from './app.component';
     SideBarModule,
     TopBarModule,
   ],
-  providers: [],
+  providers: [ColorService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

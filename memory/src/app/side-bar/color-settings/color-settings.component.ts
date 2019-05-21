@@ -1,4 +1,5 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';;
+import { ColorService } from 'src/app/color.service';
 
 @Component({
   selector: 'app-color-settings',
@@ -7,25 +8,20 @@ import { Component, OnInit, EventEmitter } from '@angular/core';
 })
 export class ColorSettingsComponent implements OnInit {
 
-  onColorChanged:EventEmitter<string> = new EventEmitter();
-  onOpenColorChanged:EventEmitter<string> = new EventEmitter();
-  onFoundColorChanged:EventEmitter<string> = new EventEmitter();
-
-  constructor() { }
+  constructor(private colorService:ColorService) { }
 
   ngOnInit() { }
 
   onColorChange(e:Event) {
-    console.log((<HTMLInputElement>event.target).value);
-    this.onColorChanged.emit((<HTMLInputElement>event.target).value);
+    this.colorService.setInactiveColor((<HTMLInputElement>e.target).value);
   }
 
-  onOpenColorChange(color:Event) {
-    //this.onOpenColorChanged.emit(color);
+  onOpenColorChange(e:Event) {
+    this.colorService.setActiveColor((<HTMLInputElement>e.target).value);
   }
 
-  onFoundColorChange(color:Event) {
-    //this.onFoundColorChanged.emit(color);
+  onFoundColorChange(e:Event) {
+    this.colorService.setFoundColor((<HTMLInputElement>e.target).value);
   }
 
 }

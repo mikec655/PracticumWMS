@@ -3,12 +3,13 @@
 </td> -->
 
 
-<td (click)="onClick($event)" *ngIf="isOpen; else isNotOpen">
+<td (click)="onClick($event)" *ngIf="isOpen; else isNotOpen" [style.background]="isFound ? foundColor : activeColor">
   {{ letter }}
 </td>
   
 <ng-template #isNotOpen>
-  <td (click)="onClick($event)" (onColorChanged)="setColor($event)" [style.background-color]="color">
+  <!-- <td (click)="onClick($event)" (onColorChanged)="setColor($event)" [style.background-color]="'FFF'"> -->
+    <td (click)="onClick($event)" [style.background]="inactiveColor">
     {{ char }}
   </td>
 </ng-template>
