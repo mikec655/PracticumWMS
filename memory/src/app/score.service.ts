@@ -1,6 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { topScore } from './side-bar/top-five/top-five.component';
+import { TopScore } from './side-bar/top-five/top-five.component';
 
 @Injectable({
   providedIn: 'root',
@@ -9,24 +9,29 @@ import { topScore } from './side-bar/top-five/top-five.component';
 
 export class ScoreService {
 
-  //changeScore:Subject<{}> = new Subject<{}>();
-  //changeScore:Subject<string> = new Subject<string>();
+  changeTopScore:Subject<TopScore> = new Subject<TopScore>();
 
-  changeTopScore:Subject<topScore> = new Subject<topScore>();
-
+  topScores:Array<TopScore> = [
+    {name:"Barack ", time:200},
+    {name:"Bernie Sanders", time:300},
+    {name:"Hillary Clinton", time:400},
+    {name:"Jeb Bush", time:500},
+    {name:"Donald Trump", time:600}
+  ]
 
   constructor() { 
   }
 
-  // scorechanged(input:string){
-  //   console.log("scoreservice scorechanged aangroepen: " + input);
-  //   this.changeScore.next(input);
-  // }
-
-
-  topScorechanged(naam:string, score:number){
-    console.log("scoreservice scorechanged aangroepen: " + naam + " "+ score);
-    var newscore : topScore = {name:naam, time:score}
-    this.changeTopScore.next(newscore);
+  getTopScores() : Array<TopScore> {
+    return this.topScores;
   }
+
+  addScore(inputname:string, inputtime:number){
+    console.log("addscore aangroepen: " + inputname + " + " + inputtime);
+    const newScore : TopScore = {name: inputname, time: inputtime};
+    this.topScores.push(newScore);
+    this.topScores.sort((a, b) => a.time - b.time);
+    this.topScores.pop();
+    console.log(this.topScores);
+ }
 }

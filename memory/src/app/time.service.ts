@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { ScoreService } from './score.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class TimeService {
   verschilGemiddeldeTijdChange:Subject<string> = new Subject<string>()
   timeBarToggle:Subject<number> = new Subject<number>();
 
-  constructor() {
+  constructor(private scoreService:ScoreService) {
     this.totaalTijd = 0;
     this.aantalTijden = 0;
     this.reset()
@@ -74,6 +75,12 @@ export class TimeService {
     if (!this.isTimeStopped) {
       this.setTijden();
       setTimeout(this.tijdBijhouden, 500);
+    } else {
+      this.totaalTijd += this.verlopenTijd;
+      this.aantalTijden++;
+
+      let name = prompt("Please enter your name", "");
+      this.scoreService.addScore(name, this.verlopenTijd)
     }
   }
 }
