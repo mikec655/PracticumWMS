@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ColorService } from 'src/app/color.service';import { Subscription } from 'rxjs';
+import { BoardService, CardData } from 'src/app/board.service';
 ;
 
 @Component({
@@ -20,11 +21,14 @@ export class CardComponent implements OnInit {
   private isFound:boolean = false;
 
   @Input() private char:string
-  @Input() private letter:string
+  @Input() private data:CardData
 
   @Output() cardClicked: EventEmitter<string> = new EventEmitter();
 
-  constructor(private colorService:ColorService) { 
+  constructor(
+    private colorService:ColorService, 
+    private boardService:BoardService) { 
+
     this.inactiveColorSubscription = colorService.inactiveColorChange.subscribe((color) => { 
       this.inactiveColor = color; 
     });
@@ -47,11 +51,12 @@ export class CardComponent implements OnInit {
   }
 
   onClick(e:Event) {
-    if (this.isOpen) {
-      this.isOpen = false;
-    } else {
-      this.isOpen = true;
-    }
+    this.boardService.cardClicked(this.data);
+    // if (this.isOpen) {
+    //   this.isOpen = false;
+    // } else {
+    //   this.isOpen = true;
+    // }
   }
 
 }

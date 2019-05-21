@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BoardService } from 'src/app/board.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-top-bar',
@@ -7,9 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TopBarComponent implements OnInit {
 
-  constructor() { }
+  foundPairs:number = 0;
+  foundPairsSubscription:Subscription
 
-  ngOnInit() {
+  constructor(private boardService:BoardService) { 
+    this.foundPairs = boardService.getFoundPairs();
+    this.foundPairsSubscription = boardService.foundPairsChange.subscribe(n => { 
+      this.foundPairs = n; 
+    });
+  }
+
+  ngOnInit() { }
+
+  ngOnDestroy() {
+    this.foundPairsSubscription.unsubscribe();
   }
 
 }
