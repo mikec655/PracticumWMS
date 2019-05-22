@@ -19,7 +19,7 @@ export class BoardService {
     state: ""
   }
 
-  private lastTimeout
+  private lastTimeout:any
 
   boardChange:Subject<CardData[][]> = new Subject<CardData[][]>()
   foundPairsChange:Subject<number> = new Subject<number>()

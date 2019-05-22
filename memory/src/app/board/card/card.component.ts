@@ -9,9 +9,9 @@ import { BoardService, CardData } from 'src/app/board.service';
   styleUrls: ['./card.component.css']
 })
 export class CardComponent implements OnInit {
-  private inactiveColor:string = "#FF0000";
-  private activeColor:string = "#00FF00";
-  private foundColor:string = "#FF00FF";
+  private inactiveColor:string;
+  private activeColor:string ;
+  private foundColor:string;
 
   inactiveColorSubscription:Subscription;
   activeColorSubscription:Subscription;
@@ -29,14 +29,17 @@ export class CardComponent implements OnInit {
     private colorService:ColorService, 
     private boardService:BoardService) { 
 
+    this.inactiveColor = colorService.getInactiveColor();
     this.inactiveColorSubscription = colorService.inactiveColorChange.subscribe((color) => { 
       this.inactiveColor = color; 
     });
 
+    this.activeColor = colorService.getActiveColor();
     this.activeColorSubscription = colorService.activeColorChange.subscribe((color) => { 
       this.activeColor = color; 
     });
 
+    this.foundColor = colorService.getFoundColor();
     this.foundColorSubscription = colorService.foundColorChange.subscribe((color) => { 
       this.foundColor = color; 
     });
