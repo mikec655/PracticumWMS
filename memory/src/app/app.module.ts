@@ -7,6 +7,11 @@ import { TopBarModule } from './top-bar/top-bar.module';
 import { AppComponent } from './app.component';
 import { BoardService } from './board.service';
 import { ColorService } from './color.service';
+import { AppRoutingModule } from './app-routing.module';
+import { LoginModule } from './login/login.module';
+import { HttpClient } from 'selenium-webdriver/http';
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,6 +22,11 @@ import { ColorService } from './color.service';
     BoardModule,
     SideBarModule,
     TopBarModule,
+    AppRoutingModule,
+    LoginModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [ColorService],
   bootstrap: [AppComponent]

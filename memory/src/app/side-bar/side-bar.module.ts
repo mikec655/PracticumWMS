@@ -4,13 +4,15 @@ import { TopFiveComponent } from './top-five/top-five.component';
 import { GameSettingsComponent } from './game-settings/game-settings.component';
 import { ColorSettingsComponent } from './color-settings/color-settings.component';
 import { NewGameComponent } from './new-game/new-game.component';
+import { LogOutComponent } from './log-out/log-out.component';
 
 @NgModule({
   declarations: [
     TopFiveComponent, 
     GameSettingsComponent, 
     ColorSettingsComponent, 
-    NewGameComponent
+    NewGameComponent, 
+    LogOutComponent
   ],
   imports: [
     CommonModule
@@ -19,7 +21,8 @@ import { NewGameComponent } from './new-game/new-game.component';
     TopFiveComponent,
     GameSettingsComponent,
     ColorSettingsComponent,
-    NewGameComponent
+    NewGameComponent,
+    LogOutComponent
   ]
 })
 export class SideBarModule { }

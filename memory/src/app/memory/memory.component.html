@@ -1,0 +1,33 @@
+<body>
+  <header>
+    <div>
+      <app-top-bar></app-top-bar>
+      <app-time-bar></app-time-bar>
+    </div>
+  </header>
+  
+  <div id="main">
+    <div>
+      <table id="speelveld">
+        <tr *ngFor="let cards of board">
+          <app-card *ngFor="let data of cards" [char]="character" [data]="data"></app-card>
+        </tr>
+      </table>
+      <table id="meta">
+        <tr><td>
+          <app-log-out></app-log-out>
+        </td></tr>
+        <tr><td>
+          <app-top-five></app-top-five>
+          <app-game-settings (charChange)="updateChar($event)"></app-game-settings>
+        </td></tr>
+        <tr><td>
+          <app-color-settings></app-color-settings>
+        </td></tr>
+        <tr><td>
+          <app-new-game></app-new-game>
+        </td></tr>
+      </table>
+    </div>
+  </div>
+</body>

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BoardService } from 'src/app/board.service';
 import { Subscription } from 'rxjs';
-import { timeout } from 'q';
 import { TimeService } from 'src/app/time.service';
 
 @Component({
