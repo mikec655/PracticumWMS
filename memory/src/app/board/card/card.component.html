@@ -1,0 +1,11 @@
+<td (click)="onClick($event)" 
+  *ngIf="data.state != 'inactive'; else isNotOpen" 
+  [style.background]="data.state == 'found' ? foundColor : activeColor">
+  {{ data.character }}
+</td>
+  
+<ng-template #isNotOpen>
+    <td (click)="onClick($event)" [style.background]="inactiveColor">
+    {{ char }}
+  </td>
+</ng-template>

@@ -1,0 +1,9 @@
+td {  
+    cursor:pointer; 
+    font-size:large; 
+    font-weight:bold; 
+    height: 75px;
+    text-align: center;
+    vertical-align: middle;
+    width: 75px;
+}

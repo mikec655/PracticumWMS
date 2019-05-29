@@ -1,0 +1,18 @@
+<b>Gemiddelde speeltijd: </b> 
+<span id="gemiddeld">{{ verschilGemiddeldeTijd }}</span><br/><br/>
+<b>Karakter op kaarten:</b> 
+<select name="character" id="character" (change)="onCharacterChange($event)">
+  <option value="*">*</option>
+  <option value="#">#</option>
+  <option value="@">@</option>
+  <option value="&">&</option>
+  <option value="%">%</option>
+  <option value="X">X</option>
+</select>
+<br>
+<b>Afmeting bord:</b>
+<select name="size" id ="size" (change)="onSizeChange($event)">
+  <option value=2>2</option>
+  <option value=4>4</option>
+  <option value=6 selected>6</option>
+</select>
