@@ -4,11 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using MemoryGame.Models;
 using MemoryGame.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MemoryGame.Controllers
 {
-    [Route("api/[controller]")]
+    [Authorize]
+    [ApiController]
+    [Route("/")]
     public class AuthenticationController : Controller
     {
         private IUserService _userService;
@@ -18,6 +21,7 @@ namespace MemoryGame.Controllers
             _userService = userService;
         }
 
+        [AllowAnonymous]
         [HttpPost("[action]")]
         public User Login([FromBody]User user)
         {
@@ -26,11 +30,20 @@ namespace MemoryGame.Controllers
             return newUser;
         }
 
+        [AllowAnonymous]
         [HttpPost("[action]")]
         public User Register([FromBody]User user)
         {
             var newUser = _userService.Register(user.Username, user.Password);
             return newUser;
         }
+
+        [HttpGet("users")]
+        public IEnumerable<User> GetAll()
+        {
+            var users = _userService.GetAll();
+            return users;
+        }
+
     }
 }

@@ -81,11 +81,9 @@ namespace MemoryGame.Services
 
         public IEnumerable<User> GetAll()
         {
-            return _users.Select(x =>
-            {
-                x.Password = null;
-                return x;
-            });
+            var query = from Users in _context.Users
+                        select Users;
+            return query.Select(user => new User { Id = user.Id, Username = user.Username });
         }
     }
 }
