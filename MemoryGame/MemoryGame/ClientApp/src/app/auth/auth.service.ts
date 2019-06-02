@@ -5,7 +5,7 @@ import { shareReplay, tap } from 'rxjs/operators'
 import * as moment from 'moment'
 import * as jwt_decode from 'jwt-decode';
 
-const API_URL = 'http://localhost:5161/api/'
+const API_URL = 'http://localhost:51671/api/authentication/'
 
 @Injectable()
 export class AuthService {     
@@ -78,6 +78,8 @@ export class AuthService {
 }
 
 interface User {
-    name:String,
-    password:String,
+    Id: number,
+    username:String,
+    password: String,
+    token: String
 }

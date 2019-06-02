@@ -12,9 +12,11 @@ using System.Threading.Tasks;
 
 namespace MemoryGame.Services
 {
+    // Based upon: https://jasonwatmore.com/post/2018/08/14/aspnet-core-21-jwt-authentication-tutorial-with-example-api
     public interface IUserService
     {
         User Authenticate(string username, string password);
+        User Register(string username, string password);
         IEnumerable<User> GetAll();
     }
     public class UserService : IUserService
@@ -26,15 +28,17 @@ namespace MemoryGame.Services
         };
 
         private readonly AppSettings _appSettings;
+        private readonly UserContext _context;
 
-        public UserService(IOptions<AppSettings> appSettings)
+        public UserService(IOptions<AppSettings> appSettings, UserContext userContext)
         {
             _appSettings = appSettings.Value;
+            _context = userContext;
         }
 
         public User Authenticate(string username, string password)
         {
-            var user = _users.SingleOrDefault(x => x.Username == username && x.Password == password);
+            var user = _context.Users.FirstOrDefault(x => x.Username == username && x.Password == password);
 
             if (user == null)
                 return null;
@@ -58,6 +62,21 @@ namespace MemoryGame.Services
             user.Password = null;
 
             return user;
+        }
+
+        public User Register(string username, string password)
+        {
+            var user = _context.Users.FirstOrDefault(x => x.Username == username);
+            if(user != null)
+            {
+                return null;
+            }
+
+            var newUser = new User { Password = password, Username = username };
+            _context.Users.AddAsync(newUser);
+            _context.SaveChangesAsync();
+
+            return newUser;
         }
 
         public IEnumerable<User> GetAll()

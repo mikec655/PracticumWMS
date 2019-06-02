@@ -8,7 +8,7 @@ namespace MemoryGame.Services
 {
     public class UserRepository
     {
-        public User[] GetUsers()
+        /*public User[] GetUsers()
         {
             return new User[] {
                 new User
@@ -28,6 +28,6 @@ namespace MemoryGame.Services
                     Password = "W@chtw00rd"
                 },
             };
-        }
+        }*/
     }
 }

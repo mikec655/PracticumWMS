@@ -21,7 +21,7 @@ namespace MemoryGame.Controllers
         }
         public User[] Get()
         {
-            return userRepository.GetUsers();
+            return new User[1];
         }
     }
 }
