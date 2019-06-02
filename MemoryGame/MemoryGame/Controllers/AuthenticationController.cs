@@ -10,8 +10,8 @@ namespace MemoryGame.Controllers
     [Route("api/[controller]")]
     public class AuthenticationController : Controller
     {
-        [HttpPost("[action]")]
-        public User Login(dynamic user)
+        [HttpGet("[action]")]
+        public User Authenticate(dynamic user)
         {
             var newUser = new User();
             return newUser;
