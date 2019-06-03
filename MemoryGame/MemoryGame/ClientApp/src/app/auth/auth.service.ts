@@ -5,7 +5,7 @@ import { shareReplay, tap } from 'rxjs/operators'
 import * as moment from 'moment'
 import * as jwt_decode from 'jwt-decode';
 
-const API_URL = 'http://localhost:5000/api/'
+const API_URL = 'http://localhost:5161/api/'
 
 @Injectable()
 export class AuthService {     
