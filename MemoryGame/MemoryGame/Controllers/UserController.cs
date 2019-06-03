@@ -68,8 +68,7 @@ namespace MemoryGame.Controllers
             }
 
             // We don't wanto be returning passwords now do we.
-            // TODO: UNCOMMENT THIS LINE, ONLY FOR TESTING PURPOSED (To see if password updates or not)
-            //user.Password = null;
+            user.Password = null;
 
             return user;
         }
