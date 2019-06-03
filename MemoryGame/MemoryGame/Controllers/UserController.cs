@@ -1,4 +1,5 @@
 ﻿using MemoryGame.Models;
+using MemoryGame.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,10 +16,23 @@ namespace MemoryGame.Controllers
     public class UserController : Controller
     {
         private UserContext _context;
+        private IUserService _userService;
 
-        public UserController(UserContext userContext)
+        public UserController(UserContext userContext, IUserService userService)
         {
+            _userService = userService;
             _context = userContext;
+        }
+
+        // POST: login/
+        [AllowAnonymous]
+        // Override default controller route to /login
+        [Route("/login")]
+        [HttpPost]
+        public ActionResult<User> Login([FromBody]User user)
+        {
+            var newUser = _userService.Authenticate(user.Username, user.Password);
+            return newUser;
         }
 
         // POST: user/
@@ -30,10 +44,16 @@ namespace MemoryGame.Controllers
             {
                 return BadRequest("Password and/or Username can't be empty");
             }
+            if (_context.Users.FirstOrDefault(x => x.Username == user.Username) != null)
+            {
+                return Conflict("User with this username already exists");
+            }
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
+            user = _userService.Authenticate(user.Username, user.Password);
+
+            return user;
         }
 
         // GET: user/4
