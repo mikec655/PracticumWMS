@@ -15,18 +15,9 @@ namespace MemoryGame.Models
         public int Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
         [NotMapped]
         public string Token { get; set; }
-    }
-
-    public class UserContext : DbContext
-    {
-        public UserContext(DbContextOptions<UserContext> options)
-            : base(options)
-        { }
-
-        public UserContext() : base() { }
-
-        public DbSet<User> Users { get; set; }
     }
 }
