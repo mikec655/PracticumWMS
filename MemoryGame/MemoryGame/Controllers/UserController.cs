@@ -29,7 +29,7 @@ namespace MemoryGame.Controllers
         // Override default controller route to /login
         [Route("/login")]
         [HttpPost]
-        public ActionResult<User> Login([FromBody]User user)
+        public ActionResult<User> Login([FromBody] User user)
         {
             var newUser = _userService.Authenticate(user.Username, user.Password);
             return newUser;
@@ -38,7 +38,7 @@ namespace MemoryGame.Controllers
         // POST: user/
         [AllowAnonymous]
         [HttpPost]
-        public async Task<ActionResult<User>> RegisterUser(User user)
+        public async Task<ActionResult<User>> RegisterUser([FromBody] User user)
         {
             if(string.IsNullOrWhiteSpace(user.Password) || string.IsNullOrWhiteSpace(user.Username))
             {
@@ -58,7 +58,7 @@ namespace MemoryGame.Controllers
 
         // GET: user/4
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<User>> GetUser([FromRoute] int id)
         {
             var user = await _context.Users.FindAsync(id);
 
@@ -75,7 +75,7 @@ namespace MemoryGame.Controllers
 
         // PUT: user/4
         [HttpPut("{id}")]
-        public async Task<ActionResult<User>> UpdateUser(int id, User user)
+        public async Task<ActionResult<User>> UpdateUser([FromRoute] int id, [FromBody] User user)
         {
             if(id.ToString() != User.Identity.Name)
             {
