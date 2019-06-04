@@ -5,15 +5,16 @@ import { shareReplay, tap } from 'rxjs/operators'
 import * as moment from 'moment'
 import * as jwt_decode from 'jwt-decode';
 
-const API_URL = 'http://localhost:51671/api/authentication/'
+const API_URL = 'http://localhost:5304/'
 
 @Injectable()
 export class AuthService {     
     constructor(private http: HttpClient) {
     }
     
-    login(name:string, password:string ) {
-        return this.http.post<User>(API_URL+'login', {name, password})
+  login(Username: string, Password: string) {
+    console.log({ Username, Password });
+        return this.http.post<User>(API_URL+'login', {Username, Password})
             .pipe (
                 tap ( 
                     res => this.setSession(res),
@@ -23,8 +24,9 @@ export class AuthService {
             )
     }
 
-    public isLoggedIn() {
-        return moment().isBefore(this.getExpiration());
+  public isLoggedIn() {
+      return moment().isBefore(this.getExpiration());
+
     }
 
 
@@ -36,13 +38,15 @@ export class AuthService {
     expiratie op te tellen bij het huidige moment. Sla deze waarop op in de local storage.
     Behalve deze expiratie bevat het JWT ook een idToken. Sla dit ook op in de local storage.
 */
-    private setSession(authResult) {
+  private setSession(authResult) {
+    this.logout();
         console.log("Setting session");
-        // console.log(authResult);
 
-        const expiresAt = moment().add(authResult.expiresIn,'second');
+        const token = jwt_decode(authResult.token)
 
-        localStorage.setItem('id_token', authResult.idToken);
+        const expiresAt = moment(token.exp * 1000);
+
+        localStorage.setItem('id_token', token.unique_name);
         localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()) );
     }
 

@@ -20,7 +20,7 @@ export class AuthGuardService implements CanActivate {
     het geval is, stuur de client dan terug naar 'login. Retourneer in het andere 
     geval gewoon een true.
 */
-  canActivate(): boolean { 
+  canActivate(): boolean {
     if (this.auth.isLoggedIn()) {
       return true;
     } else {
@@ -28,5 +28,14 @@ export class AuthGuardService implements CanActivate {
       return false;
     }
   }
+    //METHODE OM TE CHECKEN OF ER INGELOGD IS
+  canActivate2(): boolean {
+      if (this.auth.isLoggedIn()) {
+          return true;
+      } else {
+          
+         return false;
+      }
+   }
 
 }

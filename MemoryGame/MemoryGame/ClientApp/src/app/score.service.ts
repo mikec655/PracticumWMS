@@ -1,11 +1,11 @@
 import { Injectable, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { TopScore } from './side-bar/top-five/top-five.component';
 
 @Injectable({
   providedIn: 'root',
 })
-
 
 export class ScoreService {
 
@@ -19,19 +19,22 @@ export class ScoreService {
     {name:"Donald Trump", time:600}
   ]
 
-  constructor() { 
+  constructor(private http: HttpClient) {
   }
 
-  getTopScores() : Array<TopScore> {
+  getTopScores(): Array<TopScore> {
+    console.log(this.http.get("http://localhost:5304/myscores/1"));
     return this.topScores;
   }
 
-  addScore(inputname:string, inputtime:number){
-    console.log("addscore aangroepen: " + inputname + " + " + inputtime);
-    const newScore : TopScore = {name: inputname, time: inputtime};
-    this.topScores.push(newScore);
-    this.topScores.sort((a, b) => a.time - b.time);
-    this.topScores.pop();
-    console.log(this.topScores);
- }
+    addScore(inputname:string, inputtime:number){
+        console.log("addscore aangroepen: " + inputname + " + " + inputtime);
+        var id = localStorage.getItem("id_token");
+        this.http.post<TopScore>('MyScores', { id, inputtime });
+        const newScore : TopScore = {name: inputname, time: inputtime};
+        this.topScores.push(newScore);
+        this.topScores.sort((a, b) => a.time - b.time);
+        this.topScores.pop();
+        console.log(this.topScores);
+    }
 }

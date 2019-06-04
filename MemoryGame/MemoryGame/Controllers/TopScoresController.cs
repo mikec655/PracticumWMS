@@ -28,16 +28,18 @@ namespace MemoryGame.Controllers
         }
 
         // GET: TopScores/5
-        [Route("/topscores/{id}")]
+        [Route("/topscores/{gid}")]
         [HttpGet]
-        public IActionResult GetTopScores([FromRoute] int id)
+        public IActionResult GetTopScores([FromRoute] int gid)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var topScores = _context.TopScores.Where(x => x.GameId == id);
+            //var query = from _context.TopScores
+            var topScores = _context.TopScores.Where(p => p.GameId == gid).OrderBy(p => p.Score).Take(10).Include(p => p.User);
+            //var topScores = _context.TopScores.Where(p => p.GameId == gid);
 
             if (topScores == null)
             {
@@ -55,6 +57,10 @@ namespace MemoryGame.Controllers
             {
                 return BadRequest(ModelState);
             }
+            if (User.Identity.Name != id.ToString())
+            {
+                return Unauthorized();
+            }
 
             var topScores = _context.TopScores.Where(x => x.UserId == id);
 
@@ -68,11 +74,17 @@ namespace MemoryGame.Controllers
 
         // POST: MyScores
         [HttpPost]
-        public async Task<IActionResult> PostTopScores([FromBody] TopScores topScores)
+        public async Task<IActionResult> PostTopScores([FromBody] dynamic topScores)
         {
+            Console.WriteLine(topScores.GetType());
+            return Ok();
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+            if (User.Identity.Name != topScores.UserId.ToString())
+            {
+                return Unauthorized();
             }
 
             _context.TopScores.Add(topScores);
