@@ -1,4 +1,5 @@
-﻿using MemoryGame.Models;
+﻿using Angular.Controllers.Utils;
+using MemoryGame.Models;
 using MemoryGame.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -48,6 +49,7 @@ namespace MemoryGame.Controllers
             {
                 return Conflict("User with this username already exists");
             }
+            user.Password = Hash.GenerateHash(user.Password);
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
@@ -68,7 +70,7 @@ namespace MemoryGame.Controllers
             }
 
             // We don't wanto be returning passwords now do we.
-            user.Password = null;
+            //user.Password = null;
 
             return user;
         }
