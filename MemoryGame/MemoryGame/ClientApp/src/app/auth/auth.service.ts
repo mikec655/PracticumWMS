@@ -83,10 +83,10 @@ export class AuthService {
         console.log(error)
   }
 }
-
-interface User {
+//geen idee of we first &lastname zoo kunnen toevoegen zonder de boel te slopen.
+export interface User {
     Id: number,
-    username:String,
+    username: String,
     password: String,
     token: String
 }

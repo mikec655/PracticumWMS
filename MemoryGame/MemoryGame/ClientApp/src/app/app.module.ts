@@ -1,4 +1,3 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BoardModule } from './board/board.module';
 import { SideBarModule } from './side-bar/side-bar.module';
@@ -12,13 +11,14 @@ import { LoginModule } from './login/login.module';
 import { HttpClient } from 'selenium-webdriver/http';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { RegisterModule } from './register/register.module'
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
-    BrowserModule,
+    RegisterModule,
     BoardModule,
     SideBarModule,
     TopBarModule,
