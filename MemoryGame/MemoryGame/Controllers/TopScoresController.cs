@@ -74,10 +74,8 @@ namespace MemoryGame.Controllers
 
         // POST: MyScores
         [HttpPost]
-        public async Task<IActionResult> PostTopScores([FromBody] dynamic topScores)
+        public async Task<IActionResult> PostTopScores([FromBody] TopScores topScores)
         {
-            Console.WriteLine(topScores.GetType());
-            return Ok();
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -91,6 +89,13 @@ namespace MemoryGame.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetTopScores", new { id = topScores.Id }, topScores);
+        }
+
+        public class TopScorePost
+        {
+            public int UserId { get; set; }
+            public int InputTime { get; set; }
+            public int GameId { get; set; } = 1;
         }
 
         private bool TopScoresExists(int id)

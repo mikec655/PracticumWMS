@@ -1,4 +1,5 @@
-﻿using MemoryGame.Models;
+﻿using Angular.Controllers.Utils;
+using MemoryGame.Models;
 using MemoryGame.Utils;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -32,10 +33,15 @@ namespace MemoryGame.Services
 
         public User Authenticate(string username, string password)
         {
-            var user = _context.Users.FirstOrDefault(x => x.Username == username && x.Password == password);
+            var user = _context.Users.FirstOrDefault(x => x.Username == username);
 
             if (user == null)
                 return null;
+
+            if (!Hash.VerifyPassword(user.Password, password))
+            {
+                return null;
+            }
 
             // authentication successful so generate jwt token
             var tokenHandler = new JwtSecurityTokenHandler();
