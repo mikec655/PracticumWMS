@@ -74,6 +74,7 @@ namespace MemoryGame.Services
             }
 
             var newUser = new User { Password = password, Username = username };
+
             _context.Users.AddAsync(newUser);
             _context.SaveChangesAsync();
 

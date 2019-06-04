@@ -38,14 +38,16 @@ export class AuthService {
     expiratie op te tellen bij het huidige moment. Sla deze waarop op in de local storage.
     Behalve deze expiratie bevat het JWT ook een idToken. Sla dit ook op in de local storage.
 */
-  private setSession(authResult) {
-    this.logout();
+    private setSession(authResult) {
+        this.logout();
         console.log("Setting session");
 
-        const token = jwt_decode(authResult.token)
+        const token = jwt_decode(authResult.token);
 
         const expiresAt = moment(token.exp * 1000);
 
+        localStorage.setItem('user', JSON.stringify(authResult));
+        localStorage.setItem('payload', authResult.token);
         localStorage.setItem('id_token', token.unique_name);
         localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()) );
     }
@@ -58,6 +60,7 @@ export class AuthService {
     public logout() {
         console.log("Logging out")
 
+        localStorage.removeItem('payload');
         localStorage.removeItem("id_token");
         localStorage.removeItem("expires_at");
     }
@@ -78,7 +81,7 @@ export class AuthService {
     private handleError(error) {
         console.error("ERROR...")
         console.log(error)
-    }
+  }
 }
 
 interface User {

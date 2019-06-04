@@ -34,7 +34,7 @@ export class ScoreService {
       console.log(id)
       
       const newScore: TopScore = { name: inputname, time: inputtime };
-      this.http.post<object>("http://localhost:5304/MyScores", { score: inputtime, gameId: id })
+      this.http.post<object>("http://localhost:5304/MyScores", { score: inputtime, userId: id, gameId: 1 })
         .subscribe(result => console.log(result));
         this.topScores.push(newScore);
         this.topScores.sort((a, b) => a.time - b.time);

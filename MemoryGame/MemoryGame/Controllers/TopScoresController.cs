@@ -80,10 +80,7 @@ namespace MemoryGame.Controllers
             {
                 return BadRequest(ModelState);
             }
-            if (User.Identity.Name != topScores.UserId.ToString())
-            {
-                return Unauthorized();
-            }
+            Console.WriteLine(User.Identity.Name);
 
             _context.TopScores.Add(topScores);
             await _context.SaveChangesAsync();
