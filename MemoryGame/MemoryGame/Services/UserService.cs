@@ -1,4 +1,5 @@
-﻿using MemoryGame.Models;
+﻿using Angular.Controllers.Utils;
+using MemoryGame.Models;
 using MemoryGame.Utils;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -21,12 +22,6 @@ namespace MemoryGame.Services
     }
     public class UserService : IUserService
     {
-        // TODO: Switch this over to database
-        private List<User> _users = new List<User>
-        {
-            new User { Id = 1, Username = "Test", Password = "Test"}
-        };
-
         private readonly AppSettings _appSettings;
         private readonly UserContext _context;
 
@@ -38,10 +33,15 @@ namespace MemoryGame.Services
 
         public User Authenticate(string username, string password)
         {
-            var user = _context.Users.FirstOrDefault(x => x.Username == username && x.Password == password);
+            var user = _context.Users.FirstOrDefault(x => x.Username == username);
 
             if (user == null)
                 return null;
+
+            if (!Hash.VerifyPassword(user.Password, password))
+            {
+                return null;
+            }
 
             // authentication successful so generate jwt token
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -66,6 +66,7 @@ namespace MemoryGame.Services
 
         public User Register(string username, string password)
         {
+            
             var user = _context.Users.FirstOrDefault(x => x.Username == username);
             if(user != null)
             {
@@ -73,10 +74,26 @@ namespace MemoryGame.Services
             }
 
             var newUser = new User { Password = password, Username = username };
+
             _context.Users.AddAsync(newUser);
             _context.SaveChangesAsync();
 
             return newUser;
+        }
+
+        public User Register(User user)
+        {
+
+            var existingUser = _context.Users.FirstOrDefault(x => x.Username == user.Username);
+            if (existingUser != null)
+            {
+                return null;
+            }
+
+            _context.Users.AddAsync(user);
+            _context.SaveChangesAsync();
+
+            return user;
         }
 
         public IEnumerable<User> GetAll()

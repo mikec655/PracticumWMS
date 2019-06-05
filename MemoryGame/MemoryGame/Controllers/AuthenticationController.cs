@@ -21,14 +21,7 @@ namespace MemoryGame.Controllers
             _userService = userService;
         }
 
-        [AllowAnonymous]
-        [HttpPost("[action]")]
-        public User Login([FromBody]User user)
-        {
-            Console.WriteLine($"type: {user.GetType()}; tostring: {user.ToString()}");
-            var newUser = _userService.Authenticate(user.Username, user.Password);
-            return newUser;
-        }
+
 
         [AllowAnonymous]
         [HttpPost("[action]")]
