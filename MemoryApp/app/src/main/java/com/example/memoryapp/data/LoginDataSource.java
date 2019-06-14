@@ -44,7 +44,7 @@ public class LoginDataSource {
         // TODO: revoke authentication
     }
 
-    public  class LogInTask extends AsyncTask<String, Integer, String> {
+    private  class LogInTask extends AsyncTask<String, Integer, String> {
         protected String doInBackground(String... credentials) {
             HttpURLConnection urlConnection = null;
             String result = "";
