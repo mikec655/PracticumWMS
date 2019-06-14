@@ -3,7 +3,9 @@ package com.example.memoryapp.ui.login;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.content.Intent;
 import android.util.Patterns;
+import android.widget.EditText;
 
 import com.example.memoryapp.data.LoginRepository;
 import com.example.memoryapp.data.Result;

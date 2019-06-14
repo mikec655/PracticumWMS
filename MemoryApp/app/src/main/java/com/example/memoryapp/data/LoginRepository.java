@@ -32,6 +32,13 @@ public class LoginRepository {
         return user != null;
     }
 
+    public String getToken() {
+        if (isLoggedIn()) {
+            return user.getUserToken();
+        }
+        return null;
+    }
+
     public void logout() {
         user = null;
         dataSource.logout();

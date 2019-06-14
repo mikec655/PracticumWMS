@@ -3,6 +3,7 @@ package com.example.memoryapp.ui.login;
 import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -66,11 +67,14 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 if (loginResult.getSuccess() != null) {
                     updateUiWithUser(loginResult.getSuccess());
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
                 }
                 setResult(Activity.RESULT_OK);
 
                 //Complete and destroy login activity once successful
                 finish();
+
             }
         });
 
