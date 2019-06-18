@@ -24,7 +24,9 @@ namespace MemoryGame.Controllers
         [HttpGet]
         public IEnumerable<TopScores> GetTopScores()
         {
-            return _context.TopScores;
+            return _context.TopScores
+                .Include(score => score.User)
+                .Include(score => score.Game);
         }
 
         // GET: TopScores/5
