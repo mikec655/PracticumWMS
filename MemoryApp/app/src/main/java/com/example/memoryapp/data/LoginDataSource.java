@@ -50,7 +50,7 @@ public class LoginDataSource {
             String result = "";
 
             try {
-                URL url = new URL("http", "192.168.178.227", 5304, "login");
+                URL url = new URL("http", "145.37.168.243", 5304, "login");
 
                 urlConnection = (HttpURLConnection) url.openConnection();
 

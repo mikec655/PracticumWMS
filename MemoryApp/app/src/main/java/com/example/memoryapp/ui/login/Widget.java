@@ -39,6 +39,7 @@ public class Widget extends AppWidgetProvider {
             views.setRemoteAdapter(appWidgetId, R.id.listView, intent);
 
             // Tell the AppWidgetManager to perform an update on the current app widget
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.listView);
             appWidgetManager.updateAppWidget(appWidgetId, views);
         }
     }

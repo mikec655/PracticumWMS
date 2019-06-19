@@ -77,7 +77,7 @@ public class MainActivity extends Activity {
             String result = "";
 
             try {
-                URL url = new URL("http", "192.168.178.227", 5304, "myscores");
+                URL url = new URL("http", "145.37.168.243", 5304, "myscores");
 
                 urlConnection = (HttpURLConnection) url.openConnection();
 
@@ -97,7 +97,6 @@ public class MainActivity extends Activity {
                 }
                 result = strBuilder.toString();
 
-                System.out.println(result + url.toString());
             } catch (IOException ex) {
                 ex.printStackTrace();
             } finally {
