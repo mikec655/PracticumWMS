@@ -32,6 +32,7 @@ namespace MemoryGame.Controllers
         [HttpPost]
         public ActionResult<User> Login([FromBody] User user)
         {
+            Console.WriteLine("Request");
             var newUser = _userService.Authenticate(user.Username, user.Password);
             return newUser;
         }
