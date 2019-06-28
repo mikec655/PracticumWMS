@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MemoryGame.Models;
 
 namespace MemoryGame.Models
 {
@@ -17,5 +18,6 @@ namespace MemoryGame.Models
         public DbSet<User> Users { get; set; }
         public DbSet<Game> Games { get; set; }
         public DbSet<TopScores> TopScores { get; set; }
+       
     }
 }
