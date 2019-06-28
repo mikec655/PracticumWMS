@@ -234,3 +234,6 @@ _Pvt_Extensions
 
 # .vs folder
 MemoryGame/.vs/
+MemoryGame/.vs/MemoryGame/DesignTimeBuild/.dtbcache
+MemoryGame/.vs/MemoryGame/v16/.suo
+*.ide
